@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--<configuration status="OFF" monitorInterval="2000">-->
+
+<!--<properties>-->
+    <!--<property name="LOG_HOME">logs/sample</property>-->
+    <!--<property name="FILE_NAME">mylog</property>-->
+<!--</properties>-->
+
+
+<!--<appenders>-->
+    <!--<Console name="Console" target="SYSTEM_OUT">-->
+        <!--<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>-->
+    <!--</Console>-->
+    <!--<RollingRandomAccessFile name="running-log" fileName="${LOG_HOME}/${FILE_NAME}.log" filePattern="${LOG_HOME}/$${date:yyyy-MM}/${FILE_NAME}-%d{yyyy-MM-dd}-%i.log.gz">-->
+        <!--<PatternLayout-->
+                <!--pattern="%date{yyyy-MM-dd HH:mm:ss.SSS} %level [%thread][%file:%line] - %msg%n" />-->
+        <!--<Policies>-->
+            <!--<TimeBasedTriggeringPolicy />-->
+            <!--<SizeBasedTriggeringPolicy size="10 MB" />-->
+        <!--</Policies>-->
+        <!--<DefaultRolloverStrategy max="20" />-->
+    <!--</RollingRandomAccessFile>-->
+<!--</appenders>-->
+
+<!--<loggers>-->
+    <!--&lt;!&ndash;我们只让这个logger输出trace信息，其他的都是error级别&ndash;&gt;-->
+    <!--&lt;!&ndash;-->
+    <!--additivity开启的话，由于这个logger也是满足root的，所以会被打印两遍。-->
+    <!--不过root logger 的level是error，为什么Bar 里面的trace信息也被打印两遍呢-->
+    <!--&ndash;&gt;-->
+    <!--<logger name="cn.lsw.base.log4j2.Hello" level="trace" additivity="true">-->
+        <!--<appender-ref ref="running-log"/>-->
+    <!--</logger>-->
+    <!--<root level="error">-->
+        <!--<appender-ref ref="Console"/>-->
+    <!--</root>-->
+<!--</loggers>-->
+<!--</configuration>-->
+<Configuration status="trace" debug="true">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %p [%c] %m%n"/>
+        </Console>
+        <RollingFile name="ServerDailyRollingFile" filename="logs/platform/app.log"
+                     filePattern="logs/platform/$${date:yyyy-MM}/app-%d{yyyy-MM-dd-HH}-%i.log">
+            <PatternLayout charset="UTF-8">
+                <pattern>%d %t- %c{1}[%p]%m%n</pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="24" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="250 MB"/>
+            </Policies>
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <Root level="info">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="ServerDailyRollingFile"/>
+        </Root>
+    </Loggers>
+</Configuration>
