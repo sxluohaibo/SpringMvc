@@ -17,7 +17,7 @@
 
     <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
         <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://127.0.0.1:3306/JavaHibernate"/>
+        <property name="url" value="jdbc:mysql://127.0.0.1:3306/JavaHibernate?serverTimezone=UTC"/>
         <property name="username" value="root"/>
         <property name="password" value="luo5865421"/>
     </bean>
@@ -28,7 +28,7 @@
         <property name="persistenceUnitName" value="entity"/>
         <property name="packagesToScan" value="com.luohaibo.entity"/>
         <property name="persistenceProvider" >
-            <bean class="org.hibernate.jpa.HibernatePersistenceProvider"/>
+            <bean class="org.eclipse.persistence.jpa.PersistenceProvider"/>
         </property>
         <property name="jpaDialect">
             <bean class="org.springframework.orm.jpa.vendor.EclipseLinkJpaDialect"/>
